@@ -19,87 +19,30 @@ var json = require('./json');
 // 使用连接池，提升性能
 var pool = mysql.createPool(poolextend({}, mysqlconfig));
 var userData = {
-    add: function (req, res, next) {
-        pool.getConnection(function (err, connection) {
-            var param = req.query || req.params;
-            connection.query(sql.insert, [param.id, param.name, param.age], function (err, result) {
-                if (result) {
-                    result = 'add'
-                }
-                // 以json形式，把操作结果返回给前台页面
-                json(res, result);
-                // 释放连接 
-                connection.release();
-            });
-        });
-    },
-    delete: function (req, res, next) {
-        pool.getConnection(function (err, connection) {
-            var id = +req.query.id;
-            connection.query(sql.delete, id, function (err, result) {
-                if (result.affectedRows > 0) {
-                    result = 'delete';
-                } else {
-                    result = undefined;
-                }
-                json(res, result);
-                connection.release();
-            });
-        });
-    },
-    update: function (req, res, next) {
-        var param = req.body;
-        if (param.name == null || param.age == null || param.id == null) {
-            json(res, undefined);
-            return;
-        }
-        pool.getConnection(function (err, connection) {
-            connection.query(sql.update, [param.name, param.age, +param.id], function (err, result) {
-                if (result.affectedRows > 0) {
-                    result = 'update'
-                } else {
-                    result = undefined;
-                }
-                json(res, result);
-                connection.release();
-            });
-        });
-    },
-    queryById: function (req, res, next) {
-        var id = +req.query.id;
-        pool.getConnection(function (err, connection) {
-            connection.query(sql.queryById, id, function (err, result) {
-                if (result != '') {
-                    var _result = result;
-                    result = {
-                        result: 'select',
-                        data: _result
-                    }
-                } else {
-                    result = undefined;
-                }
-                json(res, result);
-                connection.release();
-            });
-        });
-    },
     queryAll: function (req, res, next) {
         pool.getConnection(function (err, connection) {
-            connection.query(sql.queryAll, function (err, result) {
-                if (result != '') {
-                    var _result = result;
-                    result = {
-                        result: 'selectall',
-                        data: _result
-                    }
-                } else {
-                    result = undefined;
-                }
-                console.log(result)
-                json(res, result);
+            connection.query(sql.index.queryAll, function (err, result) {
+                res.json(result);
                 connection.release();
             });
         });
+    },
+    userLogin: function (req, res, next) {
+        pool.getConnection(function (err, connection) {
+            connection.query(sql.user.userLogin, req.body.username, function (err, results) {
+                if (results.length === 0) {
+                    res.json({status:200,statusText:"账号不存在"});
+                } else {
+                    if (req.body.username === results[0].username && req.body.password === results[0].password) {
+                        res.json(results[0]);
+                    }else{
+                        res.json({status:200,statusText:"密码错误"});
+                    }
+                }
+                connection.release();
+            })
+        });
     }
+
 };
 module.exports = userData;
