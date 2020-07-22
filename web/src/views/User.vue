@@ -30,7 +30,6 @@ export default {
         alert('账号或密码不能为空');
       } else {
         this.axios.post('user/logon', this.loginForm).then(res => {
-          console.log(res);
           that.userToken = 'Bearer ' + res.data.token;
           // 将用户token保存到vuex中
           that.changeLogin({ Authorization: that.userToken });
