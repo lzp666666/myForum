@@ -1,7 +1,7 @@
 var mysql = {
     host: '127.0.0.1',
     user: 'root',
-    password: '7498llh',
+    password: 'phpcj',
     database: 'bai_blog',
     port: 3306
 }

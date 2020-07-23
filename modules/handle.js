@@ -18,7 +18,7 @@ var sql = require('./sql');
 var json = require('./json');
 // 使用连接池，提升性能
 var jwt = require('jsonwebtoken');  //用来生成token
-var secretOrPrivateKey='zxcvbnm123456'
+var secretOrPrivateKey = 'zxcvbnm123456'
 var pool = mysql.createPool(poolextend({}, mysqlconfig));
 var userData = {
     queryAll: function (req, res, next) {
@@ -31,23 +31,30 @@ var userData = {
     },
     userLogin: function (req, res, next) {
         pool.getConnection(function (err, connection) {
-            connection.query(sql.user.userLogin, req.body.username, function (err, results) {
-                if (results.length === 0) {
-                    res.json({status:200,statusText:"账号不存在"});
-                } else {
-                    if (req.body.username === results[0].username && req.body.password === results[0].password) {
-                        let content ={name:req.body.username}; // 要生成token的主题信息
-                        let token = jwt.sign(content, secretOrPrivateKey, {
-                            expiresIn: 60*60*6  // 6小时过期
-                        });
-                        res.json({status:1,mess:'ok',token:token,user_name:req.body.username});
-                    }else{
-                        res.json({status:200,statusText:"密码错误"});
+            if (req.body.type) {
+                connection.query(sql.user.userLogin, req.body.username, function (err, results) {
+                    if (results.length === 0) {
+                        res.json({ status: 200, statusText: "账号不存在" });
+                    } else {
+                        if (req.body.username === results[0].username && req.body.password === results[0].password) {
+                            let content = { name: req.body.username }; // 要生成token的主题信息
+                            let token = jwt.sign(content, secretOrPrivateKey, {
+                                expiresIn: 60 * 60 * 6  // 6小时过期
+                            });
+                            res.json({ status: 1, mess: 'ok', token: token, user_name: req.body.username });
+                        } else {
+                            res.json({ status: 200, statusText: "密码错误" });
+                        }
                     }
-                }
-                connection.release();
-            })
-        });
+                    connection.release();
+                })
+            } else {
+                console.log('是注册哦')
+                connection.query(sql.user.userLogio, {username:req.body.username,password:req.body.password}, function (err, results) {
+                console.log(results)
+                })
+            }
+        })
     }
 
 };

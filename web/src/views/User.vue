@@ -1,12 +1,12 @@
 <template>
   <div class="user">
-    <div class="title">{{title}}</div>
+    <div class="title">{{loginForm.type?'登录':'注册'}}</div>
     <van-field v-model="loginForm.username" label="用户名" placeholder="请输入用户名" />
     <van-field v-model="loginForm.password" label="密码" placeholder="请输入密码" />
     <van-row class="ccc">
-      <van-col span="18" class="left">没账号，点击注册</van-col>
+      <van-col span="18" class="left" @click="switchLogin">{{loginForm.type?'没账号，点击注册':'有账号，点击登录'}}</van-col>
       <van-col span="6">
-        <van-button  type="default" @click="logon()">登陆</van-button>
+        <van-button  type="default" @click="logon()">{{loginForm.type?'登录':'注册'}}</van-button>
       </van-col>
     </van-row>
   </div>
@@ -17,8 +17,7 @@ import { mapMutations } from 'vuex';
 export default {
   data() {
     return {
-      title: '账号登录',
-      loginForm: { username: '', password: '' },
+      loginForm: { username: '', password: '' ,type:true},
       userToken: ''
     }
   },
@@ -40,7 +39,7 @@ export default {
       }
     },
     switchLogin() {
-      this.title = '账号注册'
+      this.loginForm.type = !this.loginForm.type
     }
   }
 }
@@ -76,9 +75,6 @@ export default {
 }
 .ccc .left{
   font-size: 13px;
-}
-.van-button--normal{
-  padding: 0 20px;
 }
 .van-button{
   height: 35px;
