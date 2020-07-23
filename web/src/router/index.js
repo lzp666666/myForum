@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import home from '../views/home.vue'
 
 Vue.use(VueRouter)
 
@@ -8,12 +8,20 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: home
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login.vue')
   },
   {
     path: '/user',
-    name: 'User',
-    component: () => import('@/views/User.vue')
+    name: 'user',
+    meta: {
+      requireAuth: true,  // 判断是否需要登录
+    },
+    component: () => import('@/views/user.vue')
   },
 ]
 

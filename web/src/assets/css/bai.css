@@ -1,3 +1,9 @@
+.bai-hd{
+    padding: 15px;
+}
+
+
+
 .red{
     color: #d00003;
 }
@@ -223,5 +229,8 @@
     left: 0;
     top: 0;
     bottom: 0;
+}
+.NT-a{
+    box-shadow: 10px 10px 20px #929aa5, -10px -10px 20px rgb(194, 192, 192);
 }
 
