@@ -3,12 +3,21 @@ import Vue from 'vue'; //引入vue
 let vm = new Vue();
 var utils = {
     // 缓存临时数据
-    putData: function (key, value) {
-        localStorage.setItem(key, JSON.stringify({ key: key, value: value }));
+    putData: function (key, value,type) {
+        if(type){
+            sessionStorage.setItem(key, JSON.stringify({ key: key, value: value }));
+        }else{
+            localStorage.setItem(key, JSON.stringify({ key: key, value: value }));
+        }
     },
     // 获取缓存临时数据
-    getData: function (key) {
-        var data = JSON.parse(localStorage.getItem(key))
+    getData: function (key,type) {
+        let data;
+        if(type){
+            data = JSON.parse(sessionStorage.getItem(key))
+        }else{
+            data = JSON.parse(localStorage.getItem(key))
+        }
         if (data) { return data.value }
     },
     checkStatus: function (D, cb) {

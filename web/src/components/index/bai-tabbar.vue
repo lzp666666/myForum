@@ -31,12 +31,12 @@ export default {
     }
   },
   created(){
-     this.thisIndex=this.utils.getData('router-index')
+     this.thisIndex=this.utils.getData('router-index',true)||0
   },
   methods: {
     changeTab(index) {
       this.thisIndex = index
-      this.utils.putData('router-index',index)
+      this.utils.putData('router-index',index,true)
     }
   }
 }
