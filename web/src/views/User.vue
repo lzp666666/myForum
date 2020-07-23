@@ -6,43 +6,55 @@
     <van-row class="ccc">
       <van-col span="18" class="left" @click="switchLogin">{{loginForm.type?'没账号，点击注册':'有账号，点击登录'}}</van-col>
       <van-col span="6">
-        <van-button  type="default" @click="logon()">{{loginForm.type?'登录':'注册'}}</van-button>
+        <van-button type="default" @click="logon()">{{loginForm.type?'登录':'注册'}}</van-button>
       </van-col>
     </van-row>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
-      loginForm: { username: '', password: '' ,type:true},
-      userToken: ''
-    }
+      loginForm: { username: "", password: "", type: true },
+      userToken: "",
+    };
   },
   methods: {
-    ...mapMutations(['changeLogin']),
-    logon() {//登录
+    ...mapMutations(["changeLogin"]),
+    logon() {
+      //登录
       let that = this;
-      if (this.loginForm.username === '' || this.loginForm.password === '') {
-        alert('账号或密码不能为空');
+      if (this.loginForm.username === "" || this.loginForm.password === "") {
+        this.$notify("账号或密码不能为空");
       } else {
-        this.axios.post('user/logon', this.loginForm).then(res => {
-          that.userToken = 'Bearer ' + res.data.token;
-          // 将用户token保存到vuex中
-          that.changeLogin({ Authorization: that.userToken });
-          alert('登陆成功');
-        }).catch(error => {
-          console.log(error);
-        });
+        this.axios
+          .post("user/logon", this.loginForm)
+          .then((res) => {
+            if (this.loginForm.type) {
+              that.userToken = "Bearer " + res.data.token;
+              // 将用户token保存到vuex中
+              that.changeLogin({ Authorization: that.userToken });
+              that.$notify({ type: "success", message: "登陆成功" });
+            } else {
+              if (res.data.status === 200) {
+                that.$notify({ type: "success", message: res.data.message });
+              } else {
+                this.$notify(res.data.message);
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
     switchLogin() {
-      this.loginForm.type = !this.loginForm.type
-    }
-  }
-}
+      this.loginForm.type = !this.loginForm.type;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -70,13 +82,13 @@ export default {
   margin-top: 20px;
   margin-left: 70%;
 }
-.ccc{
-  padding:15px  20px;
+.ccc {
+  padding: 15px 20px;
 }
-.ccc .left{
+.ccc .left {
   font-size: 13px;
 }
-.van-button{
+.van-button {
   height: 35px;
 }
 </style>
