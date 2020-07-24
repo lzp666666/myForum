@@ -24,9 +24,11 @@ var pool = mysql.createPool(poolextend({}, mysqlconfig));
 var userData = {
     queryAll: function (req, res, next) {
         pool.getConnection(function (err, connection) {
-            connection.query(sql.index.queryAll, function (err, result) {
-                res.json(result);
-                connection.release();
+            connection.query('SELECT * FROM category_list', function (err, result_01) {
+                connection.query('SELECT * FROM article_list', function (err, result_02) {
+                    res.json({category_list:result_01,article_list:result_02});
+                    connection.release();
+                })
             });
         });
     },

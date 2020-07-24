@@ -22,7 +22,7 @@ export default {
     this.axios.get('/queryAll')
       .then((res) => {
         if (res.status === 200) {
-          that.dataList = res.data
+          that.dataList = res.data.article_list
         }
       })
       .catch((error) => {

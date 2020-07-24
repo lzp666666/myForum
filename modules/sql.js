@@ -2,7 +2,8 @@
 // SQL语句封裝
 var user = {
     index: {
-        queryAll: 'SELECT * FROM article_list'
+        queryAll: 'SELECT * FROM article_list',
+        queryCategory: 'SELECT * FROM category_list'
     },
     user: {
         userLogin: 'SELECT * FROM user WHERE username = ?',
