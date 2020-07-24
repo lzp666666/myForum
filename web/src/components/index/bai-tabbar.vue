@@ -30,9 +30,13 @@ export default {
       thisIndex: 0
     }
   },
+  created(){
+     this.thisIndex=this.utils.getData('router-index',true)||0
+  },
   methods: {
     changeTab(index) {
       this.thisIndex = index
+      this.utils.putData('router-index',index,true)
     }
   }
 }
