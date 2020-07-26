@@ -3,12 +3,23 @@
     <div class="title">{{loginForm.type?'登录':'注册'}}</div>
     <van-field v-model="loginForm.username" label="用户名" placeholder="请输入用户名" />
     <van-field v-model="loginForm.password" label="密码" placeholder="请输入密码" />
+    <div v-show="!loginForm.type">
+      <van-field v-model="loginForm.real_name" label="昵称" placeholder="请输入昵称" />
+      <van-field v-model="loginForm.portrait" label="头像地址" placeholder="请输入头像地址">
+        <template #button>
+          <van-button size="mini" type="default" @click="popupShow=true">默认头像</van-button>
+        </template>
+      </van-field>
+    </div>
     <van-row class="ccc">
       <van-col span="18" class="left" @click="switchLogin">{{loginForm.type?'没账号，点击注册':'有账号，点击登录'}}</van-col>
       <van-col span="6">
         <van-button type="default" @click="logon()">{{loginForm.type?'登录':'注册'}}</van-button>
       </van-col>
     </van-row>
+    <van-popup class="pop-img" v-model="popupShow" position="right" :style="{ height: '100%',width:'20%'}">
+      <img v-for="item in (1,10)" :key="item" @click="loginForm.portrait='default:'+item,popupShow=false" :src="require('../assets/img/portrait/'+item+'.jpg')">
+    </van-popup>
   </div>
 </template>
 
@@ -17,7 +28,8 @@ import { mapMutations } from "vuex";
 export default {
   data() {
     return {
-      loginForm: { username: "admin", password: "123456", type: true },
+      loginForm: { username: "admin", password: "123456", type: true,portrait:'default:1',real_name:''},
+      popupShow: false
     };
   },
   created() {
@@ -29,7 +41,7 @@ export default {
       //登录
       let that = this;
       if (this.loginForm.username === "" || this.loginForm.password === "") {
-        this.$notify("账号或密码不能为空");
+        this.$toast("账号或密码不能为空");
       } else {
         this.axios
           .post("user/logon", this.loginForm)
@@ -37,8 +49,11 @@ export default {
             this.utils.checkStatus(res, () => {
               that.saveToken(res.data.token);
               that.saveInfo(res.data.userData);
-              that.$notify({ type: "success", message: res.data.message });
-              this.$router.push('user')
+              that.$toast({
+                type: "success", message: res.data.message, onClose: () => {
+                  this.$router.push('user')
+                }
+              });
             })
           })
       }
@@ -83,5 +98,8 @@ export default {
 }
 .van-button {
   height: 35px;
+}
+.pop-img img{
+  width: 100%;
 }
 </style>

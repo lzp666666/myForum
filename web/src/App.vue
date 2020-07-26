@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <router-view />
-    <baiTabbar />
+    <keep-alive>
+      <router-view />
+    </keep-alive>
+    <baiTabbar v-show="!this.$route.meta.footShow" />
   </div>
 </template>
 <script>
@@ -9,7 +11,6 @@ import baiTabbar from '@/components/index/bai-tabbar'
 export default {
   components: { baiTabbar },
   created() {
-   
   }
 }
 </script>

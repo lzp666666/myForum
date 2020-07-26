@@ -3,7 +3,7 @@ import Vue from 'vue'; //引入vue
 let vm = new Vue();
 var utils = {
     // 缓存临时数据
-    putData: function (key, value,type) {
+    putData(key, value,type) {
         if(type){
             sessionStorage.setItem(key, JSON.stringify({ key: key, value: value }));
         }else{
@@ -11,7 +11,7 @@ var utils = {
         }
     },
     // 获取缓存临时数据
-    getData: function (key,type) {
+    getData(key,type) {
         let data;
         if(type){
             data = JSON.parse(sessionStorage.getItem(key))
@@ -20,7 +20,14 @@ var utils = {
         }
         if (data) { return data.value }
     },
-    checkStatus: function (D, cb) {
+    clearData(key,type){
+        if(type){
+            sessionStorage.removeItem(key)
+        }else{
+            localStorage.removeItem(key)
+        }
+    },
+    checkStatus(D, cb) {
         if (D.data.status === 0) {
             vm.$notify(D.data.message);
         } else {
@@ -28,7 +35,7 @@ var utils = {
         }
     },
     verify: {//验证
-        userName: function (value) {
+        userName(value) {
             if (value.trim() === "") {
                 return "用户名不能为空";
             }

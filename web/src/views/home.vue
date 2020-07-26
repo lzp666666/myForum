@@ -1,6 +1,10 @@
 <template>
   <div class="home">
-    <div class="list" v-for="item in dataList" :key="item.key">
+    <van-tabs v-model="tabsActive" animated swipeable @click="tabsActiveFn">
+      <van-tab title="推荐"></van-tab>
+      <van-tab v-for="item in dataList.category" :key="item.id" :title="item.name"></van-tab>
+    </van-tabs>
+    <div class="list" v-for="item in dataList.article" :key="item.key">
       <div class="title">{{item.title}}</div>
       <div class="conten">{{item.content}}</div>
       <div class="foot">0赞同-0评论</div>
@@ -14,20 +18,42 @@ export default {
   name: 'Home',
   data() {
     return {
-      dataList: []
+      dataList: { article: [], category: [] },
+      tabsActive: 0
     }
   },
   created() {
-    var that = this;
-    this.axios.get('/queryAll')
-      .then((res) => {
-        if (res.status === 200) {
-          that.dataList = res.data.article_list
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.queryAll()
+  },
+  methods: {
+    queryAll() {
+      var that = this;
+      this.axios.get('forum/article')
+        .then((res) => {
+          if (res.status === 200) {
+            that.dataList.article = res.data.data
+          }
+        })
+      this.axios.get('forum/category')
+        .then((res) => {
+          if (res.status === 200) {
+            that.dataList.category = res.data.data
+          }
+        })
+    },
+    tabsActiveFn(name, title) {
+      var that = this;
+      if (name === 0) {
+        that.queryAll()
+      } else {
+        that.axios.get('forum/categroyId/' + name)
+          .then((res) => {
+            if (res.status === 200) {
+              that.dataList.article = res.data.data
+            }
+          })
+      }
+    }
   }
 }
 </script>
@@ -38,7 +64,7 @@ export default {
 .list {
   margin-top: 10px;
   background: #ffffff;
-   box-shadow: 10px 10px 20px #929aa5, -10px -10px 20px rgb(194, 192, 192);
+  box-shadow: 10px 10px 20px #929aa5, -10px -10px 20px rgb(194, 192, 192);
   padding: 10px;
 }
 .conten {
@@ -50,7 +76,7 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.foot{
+.foot {
   margin-top: 5px;
   font-size: 12px;
 }
