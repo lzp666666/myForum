@@ -4,7 +4,7 @@
       title="标题"
       left-text="返回"
       left-arrow
-      @click-left="go"
+      @click-left="$router.go(-1)"
       @click-right="onClickRight"
       right-text="提交"
     />
@@ -52,7 +52,7 @@ export default {
     }
   },
   created() {
-    this.axios.get('home/category')
+    this.axios.get('forum/category')
       .then((res) => {
         if (res.status === 200) {
           this.category = res.data.data
@@ -68,7 +68,7 @@ export default {
       console.info(e);
     },
     onClickRight() {
-      var title = this.title, content = this.content, openPop = this.openPop,category=this.category,nowType=this.nowType;
+      var title = this.title, content = this.content, openPop = this.openPop, category = this.category, nowType = this.nowType;
       if (title.length === 0) {
         this.$notify('标题不能为空')
         return
@@ -83,12 +83,14 @@ export default {
       }
       this.axios.post('forum/publish', { title: title, content: content, categroy: category[nowType].id }).then((res) => {
         if (res.status === 200) {
-         
+          this.$toast({
+            type: "success", message: '发表成功', onClose: () => {
+              this.$router.go('-1')
+            }
+          });
+
         }
       })
-    },
-    go() {
-      this.$router.go(-1)
     },
   }
 }
@@ -98,8 +100,10 @@ body {
   background-color: #fff;
 }
 .ql-toolbar {
+  right: 0;
   position: fixed;
   bottom: 0;
+  left: 0;
 }
 .type {
   position: fixed;

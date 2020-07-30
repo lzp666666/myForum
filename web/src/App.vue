@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
       <router-view />
-    </keep-alive>
     <baiTabbar v-show="!this.$route.meta.footShow" />
   </div>
 </template>

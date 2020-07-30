@@ -14,6 +14,11 @@ let controller = {
             res.json({ status: 200, message: '获取成功', data: results });
         })
     },
+    articleId(req, res, next){
+        querySql.Data('SELECT * FROM article_list where id = ?', req.params.id, function (err, results) {
+            res.json({ status: 200, message: '获取成功', data: results });
+        });
+    },
     categroyId(req, res, next) {
         querySql.Data('SELECT * FROM article_list where categroy = ?', req.params.id, function (err, results) {
             res.json({ status: 200, message: '获取成功', data: results });

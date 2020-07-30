@@ -43,10 +43,8 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #ecf0f3;
-}
 .bai-tabbar {
+  background-color: #fff;
   padding: 10px 20px;
   position: fixed;
   bottom: 0;

@@ -11,7 +11,7 @@ import utils from './assets/js/utils.js';
 Vue.prototype.axios = axios
 Vue.prototype.utils = utils
 Vue.use(Vant);
-axios.defaults.baseURL = 'http://localhost:3000/'
+axios.defaults.baseURL = 'http://106.52.95.222:3000/'
 Vue.config.productionTip = false
 //  路由判断登录 根据路由配置文件的参数
 router.beforeEach((to, from, next) => {

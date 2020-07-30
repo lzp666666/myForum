@@ -11,8 +11,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 //extended: true开启post请求？？
 app.use(logger('dev'));//实现了终端日志的输出
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '10mb'})); 
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true })); 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

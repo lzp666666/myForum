@@ -1,13 +1,21 @@
 <template>
   <div class="home">
-    <van-tabs v-model="tabsActive" animated swipeable @click="tabsActiveFn">
+    <van-tabs class="tabs" v-model="tabsActive" animated swipeable @click="tabsActiveFn">
       <van-tab title="推荐"></van-tab>
       <van-tab v-for="item in dataList.category" :key="item.id" :title="item.name"></van-tab>
     </van-tabs>
-    <div class="list" v-for="item in dataList.article" :key="item.key">
-      <div class="title">{{item.title}}</div>
-      <div class="conten">{{item.content}}</div>
-      <div class="foot">0赞同-0评论</div>
+    <div class="content">
+      <router-link
+        tag="div"
+        :to="{name:'article', params: {id:item.id}}"
+        class="list"
+        v-for="item in dataList.article"
+        :key="item.key"
+      >
+        <div class="title">{{item.title}}</div>
+        <div class="conten" v-html="item.content"></div>
+        <div class="foot">0赞同-0评论</div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -59,12 +67,17 @@ export default {
 </script>
 <style scoped>
 .home {
-  padding: 15px;
+}
+.content {
+  background-color: #ecf0f3;
+  padding-top: 6vh;
+  overflow: scroll;
+  height: 81vh;
+  padding-bottom: 2rem;
 }
 .list {
   margin-top: 10px;
   background: #ffffff;
-  box-shadow: 10px 10px 20px #929aa5, -10px -10px 20px rgb(194, 192, 192);
   padding: 10px;
 }
 .conten {
@@ -79,5 +92,11 @@ export default {
 .foot {
   margin-top: 5px;
   font-size: 12px;
+}
+.tabs {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
 }
 </style>

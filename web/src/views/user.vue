@@ -1,6 +1,6 @@
 <template>
   <div class="bai-hd">
-    <div class="dis-flex NT-a bg-white">
+    <div class="dis-flex NT-a bg-white" style="height:6rem">
       <img class="portrait" :src="portrait()" />
       <div class="info">
         <div class="real_name">

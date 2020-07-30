@@ -31,7 +31,13 @@ const routes = [
       footShow: true, // true显示，false隐藏
     },
     component: () => import('@/views/home/publish.vue')
-  }
+  },
+  {
+    path: '/article/:id',
+    name: 'article',
+    component: () => import('@/views/home/article.vue'),
+    children: [],
+  },
 ]
 
 const router = new VueRouter({

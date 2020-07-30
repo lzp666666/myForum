@@ -8,6 +8,9 @@ router.get('/category', function (req, res, next) {//获取所有的分类
 router.get('/article', function (req, res, next) {//获取所有的帖子
   controller.article(req, res, next)
 });
+router.get('/article/:id', function (req, res, next) {//查找id帖子
+  controller.articleId(req, res, next)
+});
 router.get('/categroyId/:id', function (req, res, next) {//查找分类的帖子
   controller.categroyId(req, res, next)
 });
