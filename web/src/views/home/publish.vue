@@ -113,7 +113,7 @@ body {
   z-index: 100;
 }
 .ql-editor {
-  height: 35rem;
+  height: 78vh;
 }
 .ql-container {
   padding-bottom: 50px;

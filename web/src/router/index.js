@@ -35,6 +35,9 @@ const routes = [
   {
     path: '/article/:id',
     name: 'article',
+    meta: {
+      footShow: true, // true显示，false隐藏
+    },
     component: () => import('@/views/home/article.vue'),
     children: [],
   },

@@ -4,6 +4,9 @@
       <van-tab title="推荐"></van-tab>
       <van-tab v-for="item in dataList.category" :key="item.id" :title="item.name"></van-tab>
     </van-tabs>
+        <div>
+      <!-- <van-search v-model="value" placeholder="请输入搜索关键词" /> -->
+    </div>
     <div class="content">
       <router-link
         tag="div"
@@ -76,9 +79,10 @@ export default {
   padding-bottom: 2rem;
 }
 .list {
-  margin-top: 10px;
+  border-radius: 9px;
   background: #ffffff;
-  padding: 10px;
+  padding: 16px;
+  margin: 10px;
 }
 .conten {
   font-size: 13px;
