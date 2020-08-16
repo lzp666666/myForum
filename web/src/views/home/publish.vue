@@ -41,7 +41,7 @@ export default {
             ['blockquote', 'code-block'],     //引用，代码块
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],     //列表
             [{ 'align': [] }],    //对齐方式
-            ['image']    //上传图片、上传视频
+            ['image','video']    //上传图片、上传视频
           ]
         }
       },
@@ -81,7 +81,7 @@ export default {
         this.$notify('分类没有选择')
         return
       }
-      this.axios.post('forum/publish', { title: title, content: content, categroy: category[nowType].id }).then((res) => {
+      this.axios.post('forum/publishVideo', { title: title, content: content, categroy: category[nowType].id }).then((res) => {
         if (res.status === 200) {
           this.$toast({
             type: "success", message: '发表成功', onClose: () => {
@@ -133,5 +133,17 @@ body {
 }
 .van-radio-group {
   padding: 30px 0 8rem 20px;
+}
+.ql-snow .ql-picker.ql-expanded .ql-picker-options{
+  transform: translateY(-120%);
+}
+.ql-toolbar.ql-snow{
+  padding: 5px;
+}
+.ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button{
+  height: 30px;
+}
+.ql-toolbar.ql-snow .ql-formats{
+  margin-right: 6px;
 }
 </style>  

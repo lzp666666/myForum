@@ -29,8 +29,22 @@ const routes = [
     name: 'publish',
     meta: {
       footShow: true, // true显示，false隐藏
+      
     },
     component: () => import('@/views/home/publish.vue')
+  },
+  {
+    path: '/publishVideo',
+    name: 'publishVideo',
+    meta: {
+      footShow: true, // true显示，false隐藏
+    },
+    component: () => import('@/views/home/publishVideo.vue')
+  },
+  {
+    path: '/find',
+    name: 'find',
+    component: () => import('@/views/find.vue')
   },
   {
     path: '/article/:id',

@@ -11,6 +11,7 @@
       </div>
     </div>
     <div class="NT-a martop-15 bg-white text-center publish" @click="$router.push('publish')">发表文章</div>
+    <div class="NT-a martop-15 bg-white text-center publish" @click="$router.push('publishVideo')">发表视频</div>
     <div class="NT-a martop-15 bg-white text-center publish" @click="signOut">退出登录</div>
   </div>
 </template>

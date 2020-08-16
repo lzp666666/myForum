@@ -25,12 +25,18 @@ let controller = {
         });
     },
     publish(req, res, next) {
-        console.log(req.body)
         querySql.Data('insert into article_list set ?', { title: req.body.title, content: req.body.content, categroy: req.body.categroy }
             , function (err, results) {
                 console.log(err)
                 res.json({ status: 200, message: '发表成功', data: results });
             });
+    },
+    publishVideo(req, res, next){
+        querySql.Data('insert into video set ?', { title: req.body.title, content: req.body.content}
+        , function (err, results) {
+            console.log(err)
+            res.json({ status: 200, message: '发表成功', data: results });
+        });
     }
 }
 module.exports = controller

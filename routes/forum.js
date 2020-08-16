@@ -17,4 +17,7 @@ router.get('/categroyId/:id', function (req, res, next) {//查找分类的帖子
 router.post('/publish', function (req, res, next) {//查找分类的帖子
   controller.publish(req, res, next)
 });
+router.post('/publishVideo', function (req, res, next) {//创建视频
+  controller.publishVideo(req, res, next)
+});
 module.exports = router;

@@ -7,6 +7,7 @@ import axios from 'axios'
 import Vant from 'vant';
 import 'vant/lib/index.css';
 import './assets/css/bai.css';
+import './assets/css/style.css';
 import utils from './assets/js/utils.js';
 Vue.prototype.axios = axios
 Vue.prototype.utils = utils

@@ -23,7 +23,7 @@ export default {
     return {
       tabbarData: [
         { logo: "iconshouye", name: '主页', url: '/' },
-        { logo: "iconfaxian", name: '发现' },
+        { logo: "iconfaxian", name: '发现' , url: 'find'},
         { logo: "iconxiaoxi", name: '消息' },
         { logo: "iconyonghu", name: '我的', url: 'user' }
       ],

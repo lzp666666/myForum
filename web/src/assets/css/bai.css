@@ -233,9 +233,5 @@
 .NT-a{
     box-shadow: 10px 10px 20px #929aa5, -10px -10px 20px rgb(194, 192, 192);
 }
-.centen-s{
-    overflow: scroll;
-    height: 79vh;
-    padding-bottom: 2rem;
-}
+
 
